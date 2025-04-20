@@ -37,6 +37,6 @@ def preprocess_text(text: str) -> str:
 
 
 if __name__ == "__main__":
-    df = load_dataset()
-    df['cleaned'] = df['description'].apply(preprocess_text)
-    print(df[['product_id', 'cleaned']].head())
+    dataset = load_dataset()
+    dataset['cleaned'] = dataset['description'].apply(preprocess_text)
+    print(dataset[['product_id', 'cleaned']].head())

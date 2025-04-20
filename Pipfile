@@ -10,6 +10,10 @@ numpy = "*"
 faiss-cpu = "*"
 python-dotenv = "*"
 datasets = "*"
+langchain = "*"
+langchain-openai = "*"
+langchain-community = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 

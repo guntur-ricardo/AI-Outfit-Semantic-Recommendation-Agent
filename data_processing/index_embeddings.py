@@ -31,13 +31,13 @@ def build_and_save_index(output_path: str = 'embeddings.pkl'):
     """
     Load dataset, preprocess descriptions, generate embeddings, and serialize index.
     """
-    df = load_dataset()
-    df['cleaned'] = df['description'].apply(preprocess_text)
-    texts = df['cleaned'].tolist()
+    dataset = load_dataset()
+    dataset['cleaned'] = dataset['description'].apply(preprocess_text)
+    texts = dataset['cleaned'].tolist()
     embeddings = embed_texts(texts)
 
     index_data = {
-        'product_ids': df['product_id'].tolist(),
+        'product_ids': dataset['product_id'].tolist(),
         'embeddings': embeddings
     }
     with open(output_path, 'wb') as f:
@@ -45,5 +45,6 @@ def build_and_save_index(output_path: str = 'embeddings.pkl'):
     print(f"Saved embeddings for {len(texts)} products → {output_path}")
 
 
+# pipenv run python -m data_processing.index_embeddings
 if __name__ == "__main__":
     build_and_save_index()
