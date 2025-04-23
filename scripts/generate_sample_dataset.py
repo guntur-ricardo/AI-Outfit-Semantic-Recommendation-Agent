@@ -3,32 +3,71 @@ import pandas as pd
 import os
 
 
+# pipenv run python scripts/generate_sample_dataset.py
 def make_sample_csv(
         hf_dataset: str = "McAuley-Lab/Amazon-Reviews-2023",
         split: str = "full",
         category: str = "raw_meta_Amazon_Fashion",
-        sample_size: int = 500,
-        output_path: str = "data/amazon_fashion_sample.csv",
+        sample_size: int = 5000,
+        output_path: str = "data/amazon_fashion_sample_enriched.csv",
 ):
+    """
+    Stream a small sample from the Hugging Face Fashion metadata split,
+    extracting and flattening key fields for enrichment:
+      - parent_asin -> product_id
+      - title
+      - description (list -> concatenated string)
+      - features (list -> semicolon-separated) NOTES: Mainly material; IE: 100% cotton, elastic, rubber -- could be useful
+      - categories (list -> ' > ' joined)
+      - details (JSON string -> flattened 'key: value; ...') NOTES: This seems to be irrelevant to outfit semantic recommendation
+      - average_rating
+      - rating_number
+      - price (convertable to float or None) NOTES: NOTES: This seems to be irrelevant to outfit semantic recommendation
+    """
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-    # Load Hugging Face dataset
-    ds_iter = load_dataset(hf_dataset, category, split=split, streaming=True, trust_remote_code=True)
-
+    # Stream the dataset
+    ds_iter = load_dataset(
+        hf_dataset,
+        category,
+        split=split,
+        streaming=True,
+        trust_remote_code=True
+    )
 
     rows = []
     for example in ds_iter:
-        # Collect only title and parent_asin
-        product_id = example.get("parent_asin")
-        title = example.get("title", "").strip()
-        if not product_id or not title:
+        pid = example.get("parent_asin")
+        title = example.get("title") or ""
+        if not pid or not title:
             continue
+
+        # Flatten description list
+        desc_list = example.get("description") or []
+        if isinstance(desc_list, list):
+            description = " ".join(desc_list)
+        else:
+            description = str(desc_list)
+
+        # Flatten categories
+        cats = example.get("categories") or []
+        if isinstance(cats, list):
+            categories = " > ".join(cats)
+        else:
+            categories = str(cats)
+
+        # Ratings
+        avg_rating = example.get("average_rating") or None
+
         rows.append({
-            "product_id": product_id,
-            # Use title as the main text description for prototyping
-            "description": title
+            "product_id": pid,
+            "title": title.strip(),
+            "description": description.strip(),
+            "categories": categories,
+            "average_rating": avg_rating,
         })
+
         if len(rows) >= sample_size:
             break
 
