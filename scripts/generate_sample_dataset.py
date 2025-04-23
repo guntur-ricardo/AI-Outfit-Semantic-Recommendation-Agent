@@ -19,10 +19,10 @@ def make_sample_csv(
       - description (list -> concatenated string)
       - features (list -> semicolon-separated) NOTES: Mainly material; IE: 100% cotton, elastic, rubber -- could be useful
       - categories (list -> ' > ' joined)
-      - details (JSON string -> flattened 'key: value; ...') NOTES: This seems to be irrelevant to outfit semantic recommendation
+      - details             NOTES: This seems to be irrelevant to outfit semantic recommendation
       - average_rating
-      - rating_number
-      - price (convertable to float or None) NOTES: NOTES: This seems to be irrelevant to outfit semantic recommendation
+      - rating_number       NOTES: This seems to be irrelevant to outfit semantic recommendation
+      - price               NOTES: This seems to be irrelevant to outfit semantic recommendation
     """
     # Ensure output directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)

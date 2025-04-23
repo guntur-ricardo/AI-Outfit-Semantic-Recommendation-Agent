@@ -48,6 +48,29 @@ pipenv run test
 pipenv run start
 ```
 
+## Hitting the Server
+Via Postman
+```bash
+URL: http://127.0.0.1:8000/recommendationChat
+With raw json body:
+{
+    "query": "what should i wear to the dog park as a dude",
+    "include_products": false,
+    "top_k": 10
+}
+```
+
+Via terminal CURL
+```bash
+curl --location 'http://127.0.0.1:8000/recommendationChat' \
+--header 'Content-Type: application/json' \
+--data '{
+    "query": "Looking for outfits to wear in space as a woman astronaut",
+    "include_products": false,
+    "top_k": 10
+}'
+```
+
 ## Design Decisions
 - **Streaming vs. On‑Disk Storage**:
   -  For this prototype, I opted to keep everything **in memory** and leverage the Hugging Face streaming API to pull only the subset of data we need on demand. This approach keeps the code simple, minimizes external dependencies. Faster local dev!

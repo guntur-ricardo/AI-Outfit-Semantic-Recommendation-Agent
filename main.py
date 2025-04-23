@@ -15,6 +15,7 @@ app = FastAPI(title="Dressing")
 
 class QueryRequest(BaseModel):
     query: str
+    include_products: bool = False
     top_k: int = 20
 
 
@@ -47,8 +48,12 @@ def recommendationChat(req: QueryRequest):
         chat_response = recommendation_chain.run(req.query, sem_results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"LLM recommendation failed: {e}")
-    # 3. return both for transparency
-    return {
-        "semantic_recommendations": sem_results,
-        "chat_recommendation": chat_response
+    # 3. return both for transparency and usability in the frontend. IE tracking tokens, display product images, metadata
+    results = {
+        "chat_recommendation": chat_response,
     }
+
+    if (req.include_products):
+        results["semantic_recommendations"] = sem_results
+
+    return results
