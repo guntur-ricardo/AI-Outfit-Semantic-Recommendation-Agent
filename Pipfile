@@ -19,6 +19,7 @@ langchain = "*"
 langchain-openai = "*"
 langchain-community = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+fastapi = "*"
 
 [dev-packages]
 
