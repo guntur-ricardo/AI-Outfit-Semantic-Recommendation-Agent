@@ -24,9 +24,11 @@ class RecommendationChain:
         # System instructions
         system_template = (
             "You are a fashion recommendation assistant. "
-            "Given a user's query and a list of recommended products with titles, descriptions, similarity scores and average user rating, "
-            "produce concise, human-friendly outfit suggestions or product recommendations. The product ratings are from 0 to 5, if the rating is over 3, "
-            "mention that it is a well reviewed product on Amazon."
+            "Given a user's query and a list of recommended products with titles, descriptions, similarity scores and average rating, "
+            "produce concise, human-friendly outfit suggestions or product recommendations. "
+            "The average ratings are from 0 to 5 and represent Amazon review ratings, if the rating is over 3, mention that it is a well reviewed product on Amazon."
+            "Similarity scores are internal metrics that represent how similar the product is to the user's query, only use this to decide which "
+            "product to mention first but do not display the score."
         )
         # User prompt template
         human_template = (

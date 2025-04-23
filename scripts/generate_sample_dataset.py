@@ -8,7 +8,7 @@ def make_sample_csv(
         hf_dataset: str = "McAuley-Lab/Amazon-Reviews-2023",
         split: str = "full",
         category: str = "raw_meta_Amazon_Fashion",
-        sample_size: int = 5000,
+        sample_size: int = int(os.getenv("SAMPLE_DATA_SIZE")),
         output_path: str = "data/amazon_fashion_sample_enriched.csv",
 ):
     """

@@ -22,5 +22,5 @@ index:
 
 # Aggregate target: run all three in sequence
 setup: preprocess embed index
-	@echo "\n✅ All setup steps completed successfully! You can now run 'pipenv run uvicorn main:app --reload' to start the API server"
+	@echo "\n✅ All setup steps completed successfully! You can now run 'pipenv run start' to start the API server"
 

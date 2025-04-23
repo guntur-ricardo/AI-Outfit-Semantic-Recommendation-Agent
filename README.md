@@ -10,17 +10,21 @@ This repository implements a **semantic recommendation microservice** for an eâ€
 4. **Semantic API** (`main.py`) powered by FastAPI exposing a `/recommend` endpoint.
 
 ## Getting Started
+### Environment Variables!!!
+1. Copy everything from .env.example to a .env file in the project root.
+2. Insert your openAI API key or use my candidate one I left in the example
+
 Ensure you have `pipenv` installed, then at the project root:
 
 ```bash
 # Install dependencies and set up everything:
-make setup
+pipenv run setup
 ```
 
 This runs:
-1. `pipenv run python scripts/generate_sample_dataset.py`  
-2. `pipenv run python -m data_processing.index_embeddings`  
-3. `pipenv run python data_processing/build_faiss_index.py`
+1. `pipenv run python scripts/generate_sample_dataset.py` Streams data from huggingface  
+2. `pipenv run python -m data_processing.index_embeddings` Loads, generates embeddings and stores them for easy local dev 
+3. `pipenv run python data_processing/build_faiss_index.py` 
 
 After `make setup`, you have:
 - `data/amazon_fashion_sample.csv`
@@ -36,7 +40,12 @@ I include a very simple integration test `scripts/test_search.py` that:
 Run the tests via:
 
 ```bash
-pipenv run python -m scripts/test_search
+pipenv run test
+```
+
+## Running API Server!
+```bash
+pipenv run start
 ```
 
 ## Design Decisions

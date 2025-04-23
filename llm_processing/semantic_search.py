@@ -88,8 +88,6 @@ class SemanticSearchService:
         results = []
         for doc, score in docs_and_scores:
             md = doc.metadata
-            logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-            logger.info(md)
             results.append({
                 "product_id": md.get("product_id"),
                 "title": md.get("title"),
