@@ -7,7 +7,7 @@ default: setup
 
 install:
 	@echo "[1/4] Installing pip environment and modules"
-	pipenv install
+	pipenv sync
 
 # 2. Fetch and prepare the sample dataset
 preprocess:
