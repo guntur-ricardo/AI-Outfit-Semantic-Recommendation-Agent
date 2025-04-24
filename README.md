@@ -15,7 +15,11 @@ This repository implements a **semantic recommendation microservice** for an eâ€
 2. Insert your openAI API key or use my candidate one I left in the example
 
 Ensure you have `pipenv` installed, then at the project root:
-
+I'm on version 2024.4.0 but there shouldn't be any issues if you have a slightly different version:
+```bash
+# Install pipenv if you don't have it
+pip install pipenv --user
+```
 ```bash
 # Install dependencies and set up everything:
 pipenv run setup

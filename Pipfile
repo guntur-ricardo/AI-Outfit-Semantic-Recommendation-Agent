@@ -6,7 +6,7 @@ verify_ssl = true
 [scripts]
 setup = "make setup"
 start = "uvicorn main:app --reload"
-test = "python -m scripts/test_search"
+test = "pipenv run python -m scripts.test_search"
 
 [packages]
 openai = "*"
